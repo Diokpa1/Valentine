@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .card {
+            background: #f5f5dc;
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .cat {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .cat-face {
+            width: 100%;
+            height: 100%;
+            background: #f4a460;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .cat-ear-left,
+        .cat-ear-right {
+            width: 40px;
+            height: 50px;
+            background: #f4a460;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: -15px;
+        }
+
+        .cat-ear-left {
+            left: 10px;
+            transform: rotate(-30deg);
+        }
+
+        .cat-ear-right {
+            right: 10px;
+            transform: rotate(30deg);
+        }
+
+        .cat-eye {
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 45px;
+        }
+
+        .cat-eye-left {
+            left: 30px;
+        }
+
+        .cat-eye-right {
+            right: 30px;
+        }
+
+        .cat-blush {
+            width: 20px;
+            height: 15px;
+            background: #ff9999;
+            border-radius: 50%;
+            position: absolute;
+            top: 55px;
+            opacity: 0.6;
+        }
+
+        .cat-blush-left {
+            left: 15px;
+        }
+
+        .cat-blush-right {
+            right: 15px;
+        }
+
+        .cat-mouth {
+            width: 30px;
+            height: 15px;
+            border: 2px solid #000;
+            border-top: none;
+            border-radius: 0 0 30px 30px;
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .heart {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: -5px;
+            right: 10px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 35px;
+            height: 55px;
+            background: #ff1493;
+            border-radius: 50px 50px 0 0;
+            position: absolute;
+        }
+
+        .heart::before {
+            left: -17.5px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 17.5px;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            position: relative;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        #noBtn {
+            background: #ddd;
+            color: #666;
+            transition: all 0.1s ease;
+        }
+        
+        #noBtn.moving {
+            position: absolute;
+        }
+
+        .footer-text {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Success state */
+        .success {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success.show {
+            display: block;
+        }
+
+        .success h2 {
+            font-size: 36px;
+            color: #ff1493;
+            margin-bottom: 20px;
+        }
+
+        .gif-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff1493;
+            position: absolute;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="questionCard">
+            <div class="cat">
+                <div class="cat-face">
+                    <div class="cat-ear-left"></div>
+                    <div class="cat-ear-right"></div>
+                    <div class="cat-eye cat-eye-left"></div>
+                    <div class="cat-eye cat-eye-right"></div>
+                    <div class="cat-blush cat-blush-left"></div>
+                    <div class="cat-blush cat-blush-right"></div>
+                    <div class="cat-mouth"></div>
+                    <div class="heart"></div>
+                </div>
+            </div>
+            
+            <h1 id="question">Will you be my valentine?</h1>
+            
+            <div class="buttons">
+                <button id="yesBtn">Yes</button>
+                <button id="noBtn">No</button>
+            </div>
+            
+            <p class="footer-text">"No" seems a bit shy 💜</p>
+        </div>
+
+        <div class="card success" id="successCard">
+            <div class="cat">
+                <div class="cat-face">
+                    <div class="cat-ear-left"></div>
+                    <div class="cat-ear-right"></div>
+                    <div class="cat-eye cat-eye-left"></div>
+                    <div class="cat-eye cat-eye-right"></div>
+                    <div class="cat-blush cat-blush-left"></div>
+                    <div class="cat-blush cat-blush-right"></div>
+                    <div class="cat-mouth"></div>
+                    <div class="heart"></div>
+                </div>
+            </div>
+            
+            <h1 id="personName">Will you be my valentine?</h1>
+            <h2>YAY! 🎉</h2>
+            
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/g5R9dok94mrIvplmZd/giphy.gif" alt="Celebration">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionCard = document.getElementById('questionCard');
+        const successCard = document.getElementById('successCard');
+        const questionText = document.getElementById('question');
+        const personNameElement = document.getElementById('personName');
+
+        // Get name from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const personName = urlParams.get('name') || 'Yas';
+        questionText.textContent = `${personName}, will you be my valentine?`;
+        personNameElement.textContent = `${personName}, will you be my valentine?`;
+
+        // Move "No" button away when hover or click attempt
+        let moveCount = 0;
+        
+        function moveNoButton() {
+            moveCount++;
+            
+            // Add moving class on first move to make it position absolute
+            if (moveCount === 1) {
+                noBtn.classList.add('moving');
+            }
+            
+            const container = document.querySelector('.buttons');
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Calculate random position within container bounds
+            const maxX = containerRect.width - btnRect.width - 40;
+            const maxY = 100;
+            
+            const randomX = Math.random() * maxX - (maxX / 2);
+            const randomY = Math.random() * maxY - 50;
+            
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            
+            // Make Yes button bigger after a few attempts
+            if (moveCount > 3) {
+                yesBtn.style.transform = `scale(${1 + moveCount * 0.1})`;
+            }
+        }
+
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // Handle Yes button click
+        yesBtn.addEventListener('click', () => {
+            questionCard.style.display = 'none';
+            successCard.classList.add('show');
+            createConfetti();
+        });
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff1493', '#ff69b4', '#ffc0cb', '#ff6347', '#ffd700'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
