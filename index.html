@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff0f3;
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        /* ---- CAT ---- */
+        .cat {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .cat-face {
+            width: 100%;
+            height: 100%;
+            background: #f4a460;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .cat-ear-left,
+        .cat-ear-right {
+            width: 40px;
+            height: 50px;
+            background: #f4a460;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: -15px;
+        }
+
+        .cat-ear-left { left: 10px; transform: rotate(-30deg); }
+        .cat-ear-right { right: 10px; transform: rotate(30deg); }
+
+        .cat-eye {
+            width: 12px;
+            height: 12px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 45px;
+        }
+
+        .cat-eye-left { left: 30px; }
+        .cat-eye-right { right: 30px; }
+
+        .cat-blush {
+            width: 20px;
+            height: 14px;
+            background: #ff9999;
+            border-radius: 50%;
+            position: absolute;
+            top: 58px;
+            opacity: 0.65;
+        }
+
+        .cat-blush-left { left: 14px; }
+        .cat-blush-right { right: 14px; }
+
+        .cat-mouth {
+            width: 28px;
+            height: 14px;
+            border: 2.5px solid #333;
+            border-top: none;
+            border-radius: 0 0 28px 28px;
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ---- HEART ---- */
+        .heart-wrap {
+            position: absolute;
+            top: -8px;
+            right: 5px;
+            width: 36px;
+            height: 36px;
+            animation: heartbeat 1.4s infinite;
+        }
+
+        .heart-wrap::before,
+        .heart-wrap::after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 28px;
+            background: #ff1493;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .heart-wrap::before {
+            left: 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart-wrap::after {
+            left: 9px;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+        }
+
+        /* ---- TEXT ---- */
+        h1 {
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 36px;
+            line-height: 1.4;
+        }
+
+        /* ---- BUTTONS ---- */
+        .buttons {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 70px;
+        }
+
+        button {
+            padding: 14px 38px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: #fff;
+        }
+
+        #yesBtn:hover {
+            box-shadow: 0 8px 22px rgba(255,20,147,0.4);
+        }
+
+        #noBtn {
+            background: #e0e0e0;
+            color: #666;
+            transition: all 0.08s ease;
+        }
+
+        #noBtn.moving {
+            position: absolute;
+        }
+
+        .footer-text {
+            margin-top: 26px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        /* ---- SUCCESS ---- */
+        .success {
+            display: none;
+        }
+
+        .success.show {
+            display: block;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .success h2 {
+            font-size: 40px;
+            color: #ff1493;
+            margin: 10px 0 20px;
+        }
+
+        .gif-container {
+            width: 100%;
+            max-width: 280px;
+            margin: 10px auto 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.7); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        /* ---- CONFETTI ---- */
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            border-radius: 2px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- QUESTION CARD -->
+        <div class="card" id="questionCard">
+            <div class="cat">
+                <div class="cat-face">
+                    <div class="cat-ear-left"></div>
+                    <div class="cat-ear-right"></div>
+                    <div class="cat-eye cat-eye-left"></div>
+                    <div class="cat-eye cat-eye-right"></div>
+                    <div class="cat-blush cat-blush-left"></div>
+                    <div class="cat-blush cat-blush-right"></div>
+                    <div class="cat-mouth"></div>
+                    <div class="heart-wrap"></div>
+                </div>
+            </div>
+
+            <h1 id="question">Will you be my valentine?</h1>
+
+            <div class="buttons">
+                <button id="yesBtn">Yes 💕</button>
+                <button id="noBtn">No</button>
+            </div>
+
+            <p class="footer-text">"No" seems a bit shy 💜</p>
+        </div>
+
+        <!-- SUCCESS CARD -->
+        <div class="card success" id="successCard">
+            <div class="cat">
+                <div class="cat-face">
+                    <div class="cat-ear-left"></div>
+                    <div class="cat-ear-right"></div>
+                    <div class="cat-eye cat-eye-left"></div>
+                    <div class="cat-eye cat-eye-right"></div>
+                    <div class="cat-blush cat-blush-left"></div>
+                    <div class="cat-blush cat-blush-right"></div>
+                    <div class="cat-mouth"></div>
+                    <div class="heart-wrap"></div>
+                </div>
+            </div>
+
+            <h1 id="personName"></h1>
+            <h2>YAY! 🎉</h2>
+
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/26tOZ42Mg6pbTUPHW/giphy.gif" alt="Confetti celebration">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const yesBtn       = document.getElementById('yesBtn');
+        const noBtn        = document.getElementById('noBtn');
+        const questionCard = document.getElementById('questionCard');
+        const successCard  = document.getElementById('successCard');
+        const questionText = document.getElementById('question');
+        const personNameEl = document.getElementById('personName');
+
+        // Personalise name
+        const params     = new URLSearchParams(window.location.search);
+        const personName = params.get('name') || 'Yas';
+        questionText.textContent = `${personName}, will you be my valentine?`;
+        personNameEl.textContent = `${personName}, will you be my valentine?`;
+
+        // ---- Moving NO button ----
+        let moveCount = 0;
+
+        function moveNo() {
+            moveCount++;
+
+            if (moveCount === 1) {
+                noBtn.classList.add('moving');
+            }
+
+            const container = document.querySelector('.buttons');
+            const cRect     = container.getBoundingClientRect();
+            const bRect     = noBtn.getBoundingClientRect();
+
+            const rangeX = cRect.width  - bRect.width  - 20;
+            const rangeY = 80;
+
+            const rx = (Math.random() * rangeX) - rangeX / 2;
+            const ry = (Math.random() * rangeY) - rangeY / 2;
+
+            noBtn.style.transform = `translate(${rx}px, ${ry}px)`;
+
+            // Grow YES button the more they try
+            if (moveCount > 2) {
+                const scale = Math.min(1 + moveCount * 0.08, 1.6);
+                yesBtn.style.transform = `scale(${scale})`;
+            }
+        }
+
+        noBtn.addEventListener('mouseenter', moveNo);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(); });
+
+        // ---- YES click ----
+        yesBtn.addEventListener('click', () => {
+            questionCard.style.display = 'none';
+            successCard.classList.add('show');
+            launchConfetti();
+        });
+
+        // ---- Confetti ----
+        function launchConfetti() {
+            const colors = ['#ff1493','#ff69b4','#ffc0cb','#ff6347','#ffd700','#c0f','#0cf'];
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'confetti-piece';
+                    p.style.left            = Math.random() * 100 + 'vw';
+                    p.style.background      = colors[Math.floor(Math.random() * colors.length)];
+                    p.style.width           = (Math.random() * 10 + 6) + 'px';
+                    p.style.height          = (Math.random() * 10 + 6) + 'px';
+                    p.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    p.style.animationDelay  = Math.random() * 1 + 's';
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 4000);
+                }, i * 40);
+            }
+        }
+    </script>
+
+</body>
+</html>
